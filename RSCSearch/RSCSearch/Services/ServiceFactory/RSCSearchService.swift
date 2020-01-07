@@ -9,7 +9,6 @@
 import UIKit
 
 class RSCSearchService: Operation, URLSessionDataDelegate {
-    @objc var dictData:NSMutableDictionary!       /* NSMutableDictionary for storing parsed response data */
        var mServiceURL: String!                      /* String for storing request URL */
        var mRequest:NSMutableURLRequest!             /* NSMutableURLRequest for storing request */
        var json:AnyObject!                           /* Object for storing json response data */
@@ -18,7 +17,6 @@ class RSCSearchService: Operation, URLSessionDataDelegate {
        //MARK: init(_ serviceURL:String)
        init(_ serviceURL:String) {
            self.mServiceURL = serviceURL
-           self.dictData = NSMutableDictionary.init()
        }
        
        //MARK: prepareRequest()->(NSMutableURLRequest)
@@ -74,12 +72,12 @@ class RSCSearchService: Operation, URLSessionDataDelegate {
                 
                 /* Send Success Notification */
                 DispatchQueue.main.async {
-                    NotificationCenter.default.post(name:Notification.Name(rawValue:Constants.Notifications.kNetworkOperationSuccess), object: self.dictData, userInfo: nil)
+                    NotificationCenter.default.post(name:Notification.Name(rawValue:Constants.Notifications.kNetworkOperationSuccess), object: self.json, userInfo: nil)
                 }
             } else {
                 /* Send Failure Notification */
                 DispatchQueue.main.async {
-                    NotificationCenter.default.post(name:Notification.Name(rawValue:Constants.Notifications.kNetworkOperationFailure), object: self.dictData, userInfo: nil)
+                    NotificationCenter.default.post(name:Notification.Name(rawValue:Constants.Notifications.kNetworkOperationFailure), object: self.json, userInfo: nil)
                 }
             }
         }
@@ -90,15 +88,8 @@ class RSCSearchService: Operation, URLSessionDataDelegate {
  
     //MARK: parseResponse(_ response:NSData)
     func parseResponse(_ response:NSData) {
-        
         /* Call parseResponse */
         self.json = try? JSONSerialization.jsonObject(with: response as Data, options: []) as AnyObject
-
-        if self.json != nil {    /* If Response is not nil, Parse Countries Data */
-            
-        } else {    /* If Response is Nil, Store Failed Result  */
-            
-        }
     }
     
 }
