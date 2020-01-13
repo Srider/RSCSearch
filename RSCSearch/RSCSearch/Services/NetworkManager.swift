@@ -8,8 +8,8 @@
 
 import UIKit
 
-class NetworkManager: NSObject {
-    static let sharedServiceManager = NetworkManager()                      /* NetworkManager - shared instance for adding requests */
+public class NetworkManager: NSObject {
+    public static let sharedServiceManager = NetworkManager()                      /* NetworkManager - shared instance for adding requests */
     var currentOperation:RSCSearchService?                                       /* BaseService - for tracking current service operation */
     var downloadInProgres:Bool! = false                                     /* Bool - For tracking whether service operation is already in progress */
     var arrRequestList:NSMutableArray = NSMutableArray.init()               /* NSMutableArray - For aggregating requests */
@@ -19,7 +19,7 @@ class NetworkManager: NSObject {
     var failureHandler:()->Void={}                                          /* ()->Void - Failure Completion Handler */
 
     //Configure Request Queue and Start Timer
-    func configureManager() -> Void {
+    public func configureManager() -> Void {
         
         /* Register for notifications */
         registerNotifications()
@@ -32,18 +32,18 @@ class NetworkManager: NSObject {
     }
     
     //MARK: Register Notifications
-    func registerNotifications() {
+    internal func registerNotifications() {
         NotificationCenter.default.addObserver(self, selector: #selector(didUpdateResultsWithData), name: NSNotification.Name(rawValue: Constants.Notifications.kNetworkOperationSuccess), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(didEndRequestWithFailure), name: NSNotification.Name(rawValue: Constants.Notifications.kNetworkOperationFailure), object: nil)
     }
     
     //MARK: Unregister Notificatons
-    func unregisterNotifications() {
+    internal func unregisterNotifications() {
         NotificationCenter.default.removeObserver(self)
     }
     
     //Start Timer
-    func startTimer() {
+    internal func startTimer() {
         if timer == nil {
             /*start timer for periodic scheduling of requests */
             timer = Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true, block: { (Timer)->() in
@@ -53,7 +53,7 @@ class NetworkManager: NSObject {
     }
     
     //Stop Timer
-    func stopTimer() {
+    internal func stopTimer() {
         if timer != nil {
             timer.invalidate()
         }
@@ -105,7 +105,7 @@ class NetworkManager: NSObject {
     }
 
     //MARK: removeCompletedOperation()
-    func removeCompletedOperation() {
+    internal func removeCompletedOperation() {
         
         /* Remove old request operation from list */
         if arrRequestList.count > 0 {
