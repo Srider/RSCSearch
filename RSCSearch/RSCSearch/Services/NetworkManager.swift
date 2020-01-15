@@ -59,7 +59,7 @@ public class NetworkManager: NSObject {
         }
     }
 
-    public func addRequestToQueue( _ string:String!, fromURL url: String, onSuccess successBlock: @escaping (_ demoData:AnyObject?) -> (), onFailure failureBlock: @escaping () -> ()) {
+    public func addRequestToQueue( _ url: String, onSuccess successBlock: @escaping (_ demoData:AnyObject?) -> (), onFailure failureBlock: @escaping () -> ()) {
         
         /* Add request operation to Queue. */
         arrRequestList.add(RSCSearchService.init(url))
