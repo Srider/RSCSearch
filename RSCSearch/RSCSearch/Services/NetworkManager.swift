@@ -15,7 +15,7 @@ public class NetworkManager: NSObject {
     var arrRequestList:NSMutableArray = NSMutableArray.init()               /* NSMutableArray - For aggregating requests */
     var requestQueue:GlobalServiceQueue? = GlobalServiceQueue.sharedQueue   /* GlobalServiceQueue - For adding service requests */
     var timer:Timer!                                                        /* Timer - For scheduling periodic service requests */
-    var successHandler:(NSMutableDictionary?)->Void={NSMutableDictionary in }                 /* (NSMutableDictionary?)->Void - Success Completion Handler */
+    var successHandler:(AnyObject?)->Void={AnyObject in }                 /* (NSMutableDictionary?)->Void - Success Completion Handler */
     var failureHandler:()->Void={}                                          /* ()->Void - Failure Completion Handler */
 
     //Configure Request Queue and Start Timer
@@ -59,7 +59,7 @@ public class NetworkManager: NSObject {
         }
     }
 
-    public func addRequestToQueue( _ string:String!, fromURL url: String, onSuccess successBlock: @escaping (_ demoData:NSMutableDictionary?) -> (), onFailure failureBlock: @escaping () -> ()) {
+    public func addRequestToQueue( _ string:String!, fromURL url: String, onSuccess successBlock: @escaping (_ demoData:AnyObject?) -> (), onFailure failureBlock: @escaping () -> ()) {
         
         /* Add request operation to Queue. */
         arrRequestList.add(RSCSearchService.init(url))
