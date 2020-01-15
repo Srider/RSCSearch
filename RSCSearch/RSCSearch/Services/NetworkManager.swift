@@ -90,8 +90,7 @@ public class NetworkManager: NSObject {
         removeCompletedOperation()
         
         /* call success handler */
-        let dictData = notification.object! as! NSMutableDictionary
-        successHandler(dictData)
+        successHandler(notification.object! as AnyObject)
     }
     
     //MARK: didFailToSendRequest()
